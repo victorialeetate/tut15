@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Application</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>CRUD Application</h1>
+    <p><%= message %></p>
+
+    <% if (book) { %>
+        <h2>Edit Book</h2>
+        <form action="/edit/<%= book.id %>" method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= book.title %>" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" id="author" name="author" value="<%= book.author %>" required>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <input type="text" class="form-control" id="comments" name="comments" value="<%= book.comments %>" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Book</button>
+        </form>
+    <% } else { %>
+        
+        <h2>Add New Book</h2>
+        <form action="/add" method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+                <label for="comments">Comments</label>
+                <input type="text" class="form-control" id="comments" name="comments" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+    <% } %>
+
+   
+    <h2>Books List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Comments</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% model.forEach(book => { %>
+                <tr>
+                    <td><%= book.id %></td>
+                    <td><%= book.title %></td>
+                    <td><%= book.author %></td>
+                    <td><%= book.comments %></td>
+                    <td>
+                        <a href="/edit/<%= book.id %>">Edit</a> |
+                        <form action="/delete/<%= book.id %>" method="POST" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
